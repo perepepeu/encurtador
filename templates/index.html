@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Encurtador de Links</title>
+</head>
+<body>
+    <h1>Encurtador de Links</h1>
+    <form method="POST">
+        <input type="url" name="url" placeholder="Cole seu link aqui" required>
+        <button type="submit">Encurtar</button>
+    </form>
+
+    {% if short_link %}
+        <p>Seu link encurtado: <a href="{{ short_link }}">{{ short_link }}</a></p>
+    {% endif %}
+</body>
+</html>
