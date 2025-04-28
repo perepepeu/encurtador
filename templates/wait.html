@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecionando...</title>
+    <script>
+        // Redireciona automaticamente depois de 10 segundos
+        setTimeout(function() {
+            window.location.href = "{{ url }}";
+        }, 10000); // 10000 ms = 10 segundos
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Espere um momento...</h1>
+    <p>Estamos te redirecionando para o site!</p>
+
+    <!-- Aqui você pode colocar um anúncio -->
+    <div style="margin-top: 50px;">
+        <h2>🌟 Anúncio Exemplo 🌟</h2>
+        <p>Conheça nossos serviços incríveis!</p>
+    </div>
+
+    <p style="margin-top: 50px;">Você será redirecionado automaticamente em 10 segundos.</p>
+</body>
+</html>
