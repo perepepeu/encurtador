@@ -1,32 +1,35 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, jsonify
 import random
 import string
-import os
 
 app = Flask(__name__)
-links = {}
 
-def gerar_codigo(tamanho=6):
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=tamanho))
+# Dicionário para armazenar URLs encurtadas
+url_db = {}
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    short_link = None
-    if request.method == 'POST':
-        url_original = request.form['url']
-        codigo = gerar_codigo()
-        links[codigo] = url_original
-        short_link = request.host_url + codigo
-    return render_template('index.html', short_link=short_link)
+@app.route('/shorten', methods=['POST'])
+def shorten_url():
+    data = request.get_json()
+    original_url = data.get('url')
 
-@app.route('/<codigo>')
-def redirecionar(codigo):
-    url = links.get(codigo)
-    if url:
-        return render_template('wait.html', url=url)
-    else:
-        return "Link inválido!", 404
+    if not original_url:
+        return jsonify({'error': 'URL não fornecida'}), 400
+
+    # Gerar uma chave curta única
+    short_key = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+    short_url = f"http://localhost:5000/{short_key}"
+
+    # Salvar no banco de dados
+    url_db[short_key] = original_url
+
+    return jsonify({'shortUrl': short_url})
+
+@app.route('/<short_key>', methods=['GET'])
+def redirect_url(short_key):
+    original_url = url_db.get(short_key)
+    if original_url:
+        return f'<script>window.location.href="{original_url}";</script>'
+    return jsonify({'error': 'URL não encontrada'}), 404
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
