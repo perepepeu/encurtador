@@ -2,17 +2,50 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="monetag" content="1e09ab6cdecbf6c1c3b2b0069b1c6edb">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encurtador de Links</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f0f0; }
+        .container {
+            max-width: 500px; margin: 100px auto;
+            background: #fff; padding: 20px;
+            border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 { text-align: center; margin-bottom: 20px; }
+        form { display: flex; }
+        input[type="url"] {
+            flex: 1; padding: 10px; font-size: 16px;
+            border: 1px solid #ccc; border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px; font-size: 16px; margin-left: 10px;
+            border: none; background-color: #007BFF; color: #fff;
+            border-radius: 4px; cursor: pointer;
+        }
+        button:hover { background-color: #0056b3; }
+        .short-link {
+            margin-top: 20px; text-align: center;
+        }
+        .short-link a {
+            color: #007BFF; text-decoration: none; word-break: break-all;
+        }
+    </style>
 </head>
 <body>
-    <h1>Encurtador de Links</h1>
-    <form method="POST">
-        <input type="url" name="url" placeholder="Cole seu link aqui" required>
-        <button type="submit">Encurtar</button>
-    </form>
-
-    {% if short_link %}
-        <p>Seu link encurtado: <a href="{{ short_link }}">{{ short_link }}</a></p>
-    {% endif %}
+    <div class="container">
+        <h1>Encurtador de Links</h1>
+        <form method="POST">
+            <input type="url" name="url" placeholder="Cole seu link aqui" required>
+            <button type="submit">Encurtar</button>
+        </form>
+        {% if short_link %}
+        <div class="short-link">
+            <p>Seu link encurtado:</p>
+            <a href="{{ short_link }}" target="_blank">{{ short_link }}</a>
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>

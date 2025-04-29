@@ -2,31 +2,44 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="monetag" content="1e09ab6cdecbf6c1c3b2b0069b1c6edb">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecionando...</title>
-    <script>
-        // Redireciona automaticamente depois de 10 segundos
-        setTimeout(function() {
-            window.location.href = "{{ url }}";
-        }, 10000); // 10000 ms = 10 segundos
-    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
             text-align: center;
-            padding-top: 100px;
+            padding: 50px;
+        }
+        .countdown {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .ad-container {
+            margin: 40px auto;
+            max-width: 300px;
         }
     </style>
+    <script>
+        let timeLeft = 10;
+        function updateCountdown() {
+            document.getElementById('countdown').innerText = timeLeft;
+            timeLeft--;
+            if (timeLeft < 0) {
+                window.location.href = "{{ url }}";
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        document.addEventListener("DOMContentLoaded", updateCountdown);
+    </script>
 </head>
 <body>
     <h1>Espere um momento...</h1>
-    <p>Estamos te redirecionando para o site!</p>
-
-    <!-- Aqui você pode colocar um anúncio -->
-    <div style="margin-top: 50px;">
-        <h2>🌟 Anúncio Exemplo 🌟</h2>
-        <p>Conheça nossos serviços incríveis!</p>
+    <p>Você será redirecionado em <span id="countdown">10</span> segundos.</p>
+    <div class="ad-container">
+        <meta name="monetag" content="1e09ab6cdecbf6c1c3b2b0069b1c6edb">
     </div>
-
-    <p style="margin-top: 50px;">Você será redirecionado automaticamente em 10 segundos.</p>
 </body>
 </html>
