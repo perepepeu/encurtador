@@ -1,51 +1,85 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="monetag" content="1e09ab6cdecbf6c1c3b2b0069b1c6edb">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encurtador de Links</title>
+    <title>Encurtador de URLs</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f0f0f0; }
-        .container {
-            max-width: 500px; margin: 100px auto;
-            background: #fff; padding: 20px;
-            border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
         }
-        h1 { text-align: center; margin-bottom: 20px; }
-        form { display: flex; }
-        input[type="url"] {
-            flex: 1; padding: 10px; font-size: 16px;
-            border: 1px solid #ccc; border-radius: 4px;
+        input {
+            padding: 10px;
+            width: 300px;
+            margin: 5px;
         }
         button {
-            padding: 10px 20px; font-size: 16px; margin-left: 10px;
-            border: none; background-color: #007BFF; color: #fff;
-            border-radius: 4px; cursor: pointer;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
-        button:hover { background-color: #0056b3; }
-        .short-link {
-            margin-top: 20px; text-align: center;
+        button:hover {
+            background-color: #0056b3;
         }
-        .short-link a {
-            color: #007BFF; text-decoration: none; word-break: break-all;
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .error {
+            color: red;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Encurtador de prova para sarah</h1>
-        <form method="POST">
-            <input type="url" name="url" placeholder="Cole seu link aqui" required>
-            <button type="submit">Encurtar</button>
-        </form>
-        {% if short_link %}
-        <div class="short-link">
-            <p>Seu link encurtado:</p>
-            <a href="{{ short_link }}" target="_blank">{{ short_link }}</a>
-        </div>
-        {% endif %}
-    </div>
+    <h1>Bem-vindo ao Encurtador de URLs</h1>
+    <form id="urlForm">
+        <input type="text" id="urlInput" placeholder="Cole sua URL aqui" required>
+        <button type="submit">Encurtar URL</button>
+    </form>
+    <div id="result" class="result"></div>
+    <div id="error" class="error"></div>
+
+    <script>
+        document.getElementById('urlForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const url = document.getElementById('urlInput').value;
+            const resultDiv = document.getElementById('result');
+            const errorDiv = document.getElementById('error');
+            resultDiv.innerHTML = '';
+            errorDiv.innerHTML = '';
+
+            if (!isValidURL(url)) {
+                errorDiv.textContent = 'Por favor, insira uma URL válida.';
+                return;
+            }
+
+            try {
+                const response = await fetch('/shorten', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url }),
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    resultDiv.innerHTML = `URL encurtada: <a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>`;
+                } else {
+                    errorDiv.textContent = data.error || 'Houve um problema ao encurtar a URL.';
+                }
+            } catch (error) {
+                errorDiv.textContent = 'Erro ao conectar ao servidor.';
+            }
+        });
+
+        function isValidURL(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>
