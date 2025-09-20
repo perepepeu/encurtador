@@ -1,26 +1,82 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', 'Rubik', Arial, sans-serif;
     text-align: center;
     padding: 50px;
-    background-color: #f9f9f9;
-    color: #333;
+    background: linear-gradient(135deg, #f0f4f9 0%, #eaf0fc 100%);
+    color: #222;
 }
 
 .container {
     max-width: 600px;
-    margin: auto;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin: 40px auto;
+    background: rgba(255,255,255,0.95);
+    padding: 32px;
+    border-radius: 18px;
+    box-shadow: 0 6px 24px 0 rgba(51,65,85,0.09), 0 1.5px 4px rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s;
+}
+
+.container:hover {
+    box-shadow: 0 12px 32px 0 rgba(51,65,85,0.13), 0 2px 12px rgba(0,0,0,0.09);
+}
+
+h1, h2, h3 {
+    font-weight: 600;
+    margin-top: 0.2em;
+    color: #2947a9;
+    letter-spacing: 0.01em;
 }
 
 .ad-container {
-    margin: 20px 0;
-    min-height: 200px; /* reserva espaço pro anúncio */
+    margin: 22px 0;
+    min-height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px dashed #ccc;
-    background-color: #fafafa;
+    border: 2px dashed #bdd3f8;
+    background: linear-gradient(90deg, #fcfdff 60%, #ebf2fb 100%);
+    border-radius: 12px;
+    color: #4d648d;
+    font-size: 1.15em;
+    transition: background 0.3s, border 0.3s;
+}
+
+.ad-container:hover {
+    background: linear-gradient(90deg, #ebf2fb 40%, #fcfdff 100%);
+    border: 2px solid #92b7f5;
+}
+
+/* Botões mais atraentes */
+button, .button {
+    font-family: inherit;
+    font-weight: 500;
+    padding: 12px 34px;
+    color: white;
+    background: linear-gradient(90deg, #5670e8 30%, #8cb5f7 100%);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(80,120,180,0.09);
+    transition: filter 0.18s;
+    cursor: pointer;
+    margin-top: 24px;
+}
+
+button:hover, .button:hover {
+    filter: brightness(1.05) saturate(1.2);
+}
+
+input, textarea, select {
+    font-family: inherit;
+    padding: 9px 16px;
+    margin: 12px 0;
+    border: 1.5px solid #b8cdf6;
+    border-radius: 6px;
+    background: #f5f8fd;
+    transition: border 0.2s;
+}
+
+input:focus, textarea:focus, select:focus {
+    border: 1.5px solid #4d648d;
+    background: #fff;
+    outline: none;
 }
